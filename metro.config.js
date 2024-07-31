@@ -1,7 +1,11 @@
-// Learn more https://docs.expo.io/guides/customizing-metro
 const { getDefaultConfig } = require('expo/metro-config');
 
-const DefaultConfig = getDefaultConfig(__dirname);
-DefaultConfig.resolver.assetExts.push('cjs');
+const defaultConfig = getDefaultConfig(__dirname);
 
-module.exports = DefaultConfig;
+module.exports = {
+  ...defaultConfig,
+  resolver: {
+    ...defaultConfig.resolver,
+    blockList: [/node_modules\/.*\/node_modules\/react-native\/.*/],
+  },
+};

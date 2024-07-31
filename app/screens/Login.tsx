@@ -4,24 +4,21 @@ import { Firebase_AUTH } from '../../FirebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import { LoginScreenNavigationProp } from '../../types';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Animated,{ FadeIn, FadeInDown, FadeInUp, FadeOut } from 'react-native-reanimated';
+
 
 const Login = () => {
-
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const auth = Firebase_AUTH;
   const navigation = useNavigation<LoginScreenNavigationProp>();
-
   const signIn = async () => {
     setLoading(true);
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log(response);
-      alert('Login successful');
+      // console.log(response);
+      navigation.navigate('test');
+///       alert('Login successful');
     } catch (error: any) {
       alert('Sign in failed: ' + error.message);
     } finally {

@@ -30,15 +30,15 @@ const SignUp = () => {
         placeholder="Email"
         autoCapitalize="none"
         onChangeText={(text) => setEmail(text)}
-      />
-      <TextInput
+    />
+    <TextInput
         style={styles.input}
         value={password}
         placeholder="Password"
         autoCapitalize="none"
         onChangeText={(text) => setPassword(text)}
         secureTextEntry={true}
-      />
+    />
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
