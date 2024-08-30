@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, Button, Text, Alert, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TextInput, Button, Text, Alert, ScrollView, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
 import { ref, set, push } from 'firebase/database';
 import { db } from '../../FirebaseConfig';
 import { Picker } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
+import { LoginScreenNavigationProp } from '../../types';
 
 // Liste des équipes participant à la CAN 2025
 const equipesCan2025 = [
@@ -40,6 +42,7 @@ const nationalities = [
 ];
 
 export default function Create() {
+  const navigation = useNavigation<LoginScreenNavigationProp>();
   const [ID, setID] = useState('');
   const [nom, setNom] = useState('');
   const [prenom, setPrenom] = useState('');
@@ -48,14 +51,15 @@ export default function Create() {
   const [nationalite, setNationalite] = useState('');
   const [showEquipePicker, setShowEquipePicker] = useState(false);
   const [showNationalitePicker, setShowNationalitePicker] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function create() {
+    setLoading(true);
     // Générer une clé unique pour l'utilisateur
     const userRef = ref(db, 'users');
     const newUserRef = push(userRef);
-
     set(newUserRef, {
-      ID:ID,
+      ID: ID,
       Nom: nom,
       Prenom: prenom,
       Age: age,
@@ -63,15 +67,23 @@ export default function Create() {
       Equipe: equipe,
     })
       .then(() => {
-        Alert.alert('Data created successfully');
+        setLoading(false);
+        navigation.navigate('home');
+        //Alert.alert('Data created successfully');
       })
       .catch((error) => {
+        setLoading(false);
         Alert.alert(error.message);
       });
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+      
+      <Image 
+            source={require('../../assets/login2.png')}
+            style={styles.photo}
+          /> 
       <Text style={styles.title}>Create User</Text>
       <TextInput
         style={styles.input}
@@ -140,38 +152,85 @@ export default function Create() {
             mode="dropdown"
           >
             <Picker.Item label="Sélectionner une équipe" value="" />
-            {equipesCan2025.map((equipe, index) => (
-              <Picker.Item key={index} label={equipe} value={equipe} />
+            {equipesCan2025.map((team, index) => (
+              <Picker.Item key={index} label={team} value={team} />
             ))}
           </Picker>
         </View>
       )}
-      <Button title="Create" onPress={create} />
-    </ScrollView>
+      {loading ? (
+            <ActivityIndicator size="large" color="#0F3510" />
+          ) : (
+            <>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={create}
+              >
+                <Text style={styles.buttonText}>create account</Text>
+              </TouchableOpacity>
+            </>
+          )}   
+
+          </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  photo: {
+    marginLeft: 80,
+    marginTop: 30,
+    height: 200,
+    width: 200,
+    bottom: 0,
+    left: 0,
+    marginBottom: 10,
+  },
+  buttonStyle: {
+    backgroundColor: 'black',
+    borderWidth: 2,
+    borderColor: 'white',
+    borderRadius: 30,
+  },
+  button: {
+    backgroundColor: '#0F3510',
+    borderRadius: 10,
+    width: '100%',
+    marginVertical: 10,
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '5%',
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
   container: {
     flexGrow: 1,
     padding: 20,
     justifyContent: 'center',
+    backgroundColor: '#fff',
   },
   title: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: 40,
+    fontWeight: 'bold',
     textAlign: 'center',
+    marginBottom: 10,
   },
   input: {
-    height: 40,
+    marginVertical: 10,
+    height: 50,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
     borderRadius: 5,
+    backgroundColor: '#fff',
   },
   pickerButton: {
-    height: 40,
+    marginVertical: 10,
+    height: 50,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 15,

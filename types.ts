@@ -3,12 +3,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
-  ForgotPassword: undefined;
   creat:undefined;
-  Home:undefined;
+  index:undefined;
+  ff:undefined;
 };
 
 export type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 export type SignUpScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'SignUp'>;
-export type ForgotPasswordScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ForgotPassword'>;
-export type homeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+export type homeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'index'>;

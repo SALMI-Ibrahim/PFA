@@ -47,7 +47,7 @@ export default function Test() {
   };
 
   if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" style={styles.loader} />;
+    return <ActivityIndicator size="large" color="#0F3510" style={styles.loader} />;
   }
 
   if (error) {
@@ -89,6 +89,7 @@ export default function Test() {
 
 const styles = StyleSheet.create({
   container: {
+   
     flex: 1,
     backgroundColor: '#f9f9f9',
   },
@@ -97,13 +98,14 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   title: {
+    marginTop:'10%',
     fontSize: 24,
     fontWeight: 'bold',
     marginVertical: 20,
     textAlign: 'center',
   },
   refreshButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#0F3510',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
