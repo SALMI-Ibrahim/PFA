@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const index = () => {
+const home = () => {
   return (
     <View style={styles.container}>
       <Text>Welcome to the Index Screen!</Text>
@@ -9,10 +9,9 @@ const index = () => {
   );
 };
 
-export default index;
+export default home;
 
 const styles = StyleSheet.create({
-  
   container: {
     flex: 1,
     justifyContent: 'center',

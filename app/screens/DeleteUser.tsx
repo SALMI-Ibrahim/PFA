@@ -7,7 +7,6 @@ import { Picker } from '@react-native-picker/picker';
 export default function DeleteUser() {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState('');
-
   useEffect(() => {
     const usersRef = ref(db, 'users');
     onValue(usersRef, (snapshot) => {
@@ -23,13 +22,11 @@ export default function DeleteUser() {
       }
     });
   }, []);
-
   function deleteUser() {
     if (!selectedUser) {
       Alert.alert('Please select a user to delete');
       return;
     }
-
     const userRef = ref(db, 'users/' + selectedUser);
     remove(userRef)
       .then(() => {
@@ -40,7 +37,6 @@ export default function DeleteUser() {
         Alert.alert(error.message);
       });
   }
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Delete User</Text>
@@ -61,7 +57,6 @@ export default function DeleteUser() {
     </ScrollView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
